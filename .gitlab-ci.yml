@@ -1,0 +1,21 @@
+stages:
+  - stage 1
+
+testjob:
+  stage: stage 1
+  when: always
+  before_script:
+  - mkdir -p ~/.ssh
+  - eval $(ssh-agent -s)
+  script: 
+    #- ssh -p "$port" "$user"@"$ip" 'touch /tmp/yogi.txt'
+    - scp -P$port -r * "$user"@"$ip":/home/dev/finneotech/
+    - ssh -p "$port" "$user"@"$ip" 'cd /home/dev/finneotech && pm2 restart all'
+  only:
+  - cicd_nodetest
+
+
+
+      #before_script:
+        # - ssh $user@$ip -p $port && cd /home/dev/finneotech/
+        # - sshpass -p $password -P $port scp -r . $user@$ip:/home/dev/finneotech/ && pm2 restart all 

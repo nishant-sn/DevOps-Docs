@@ -1,0 +1,16 @@
+FROM ubuntu:18.04
+RUN apt update
+RUN apt install -y openssh-server curl sudo wget net-tools git vim gnupg jq
+RUN curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+RUN apt install -y nodejs
+RUN npm install pm2 -g
+
+RUN mkdir /var/run/sshd
+RUN echo 'root:Buj9#4!7*k' |chpasswd
+RUN sed -ri 's/^#?PermitRootLogin\s+.*/PermitRootLogin yes/' /etc/ssh/sshd_config
+RUN mkdir /root/.ssh
+RUN mkdir /app
+
+EXPOSE 9876 3000
+
+CMD    ["/usr/sbin/sshd", "-D"]
