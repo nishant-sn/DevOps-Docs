@@ -1,0 +1,165 @@
+sync; echo 1 > /proc/sys/vm/drop_caches
+sync; echo 2 > /proc/sys/vm/drop_caches
+sync; echo 3 > /proc/sys/vm/drop_caches --  frees pagecache, dentries and inodes
+
+
+060334885274 --> aws personal acct number    
+
+web request time -- search
+
+netstat -tnlp | awk '{print $4}' | sed -e 's/.*://' | grep -v 22 | grep -v Local
+
+
+
+SELECT id, adults_count, arrival_time, billing_signature_url, checkout_request_time, checkout_request_waiting_time, checkout_status, comment, current_journey, current_journey_state, current_journey_status, departure_time, expected_arrival_time, expected_departure_time, external_confirmation_number, hotel_id, kids_count, last_completed_step, prepare_invoice_request_job_id, reservation_number, room_no, state, state_complete_steps, status, total_amount, total_due_amount, vip_status, room_id, created, updated, room_type, total_paid_amount, regcard_url, checkin_comment, timezone, room_status, email_sent, precheckin_notification_sent, checkin_notification_sent, checkout_notification_sent, source
+	FROM public.reservation where id = '93c20bcc-815b-43d7-9a2a-f3404ce14353';
+	
+	
+)))))))))))))))))))))))))))))))))))))))))))))))))-------------------------------------------------(((((((((((((((((((((((((((((((((((((((((((((((((((
+
+   --->>  TO SEE THE SLOW-QUERY LOG 
+ 
+ """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
+ 
+ NISHANT'S GITHUB PERSONAL TOKEN :  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
+ 
+ !!!!!!!!!!!!!!!!!!!!!!! NODE - COMMANDS !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+ 
+ pm2 list  --> for listing pm2 processes
+ 
+ pm2 describe "id_watching" to check the location of the code from where node app is running
+ 
+ _______________________________________________________________________________________
+ 
+ pg_dump -Fc -h localhost -U dbuser dbname -f dbname.dump
+ 
+ 
+ TO RESTORE DB IN POSTGRES
+ 
+ psql -U doadmin -p 25060 -h db-postgresql-botshot-dev-do-user-9029752-0.b.db.ondigitalocean.com -d dev_leela_jaipur < dev_leela_jaipur.dump
+
+ TO GIVE ADMIN PRIVILEGES TO A USER :
+ 
+ --> ALTER USER librarian WITH SUPERUSER
+ 
+ FOR SPECIFIC DATABASE : 
+ 
+ --> GRANT ALL PRIVILEGES ON DATABASE "user_database" to username;
+ 
+ 
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+!!!!!!!!!!!!!!!! KUBERNETES !!!!!!!!!!!!!!!!!!!!!!!!
+ 
+ 
+ export KUBECONFIG=/etc/kubernetes/admin.conf
+
+
+ 
+ +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 
+ TO RUN A JAR FILE 
+ 
+ nohup java -jar abc.jar &> abc.log &
+ +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ !!!!!!!!!!!!!!!!!!!!!!!---DOCKER---!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+ 
+ TO RUN A CONTAINER
+ 
+docker run -itd  -p 2222:22 -p 8097:8097 --name container_name image_name
+
+TO RUN WITH A LOCALHOST PORT ;
+
+docker run -d -p 127.0.0.1:8000:80 nginx
+
+
+
+TO RUN CADVISOR TO MONITOR CONTAINERS
+
+sudo docker run volume=/:/rootfs:ro volume=/var/run:/var/run:ro volume=/sys:/sys:ro volume=/var/lib/docker/:/var/lib/docker:ro volume=/dev/disk/:/dev/disk:ro publish=8081:8081 detach=true name=cadvisor google/cadvisor:latest
+
+
+CHECK LOGS OF A SPECIFIC CONTAINER :
+
+docker logs --since=1h <container_id>
+
+
+_------------------------------------------------------------------------------
+
+to make githook working run this command :
+
+git config core.hooksPath .githook --->> where .githook is the dorectory on inside your git repo
+
+
+
+
+ username = doadmin
+password = oSGX5h1lJwcFrAD1 hide
+host = db-postgresql-botshot-dev-do-user-9029752-0.b.db.ondigitalocean.com
+port = 25060
+database = defaultdb
+sslmode = require
+ 
+ 
+ username = krcnuser
+password = lqt9duh2pn6jqvv4 hide
+host = hclmusic-db-mysql-blr1-do-user-6052181-0.a.db.ondigitalocean.com
+port = 25060
+database = defaultdb
+sslmode = REQUIRED
+
+username = doadmin
+password = ruugrhyeor4rbmks hide
+host = hclmusic-db-mysql-blr1-do-user-6052181-0.a.db.ondigitalocean.com
+port = 25060
+database = defaultdb
+sslmode = REQUIRED
+ *********************************************************
+ 
+ MYSQL COMMANDS:
+ 
+ SELECT COUNT(*) FROM "table_name";  -->  to check the total number of entry count in a particular table 
+ 
+ - 
+ SELECT * FROM table WHERE your_date_field >= CURDATE() - INTERVAL 6 MONTH;
+ 
+ ALTER USER 'root'@'localhost' IDENTIFIED BY 'new_password'  ---->> for creating  initial root passwd in mysql-8
+
+
+SELECT `COLUMN_NAME`  FROM `INFORMATION_SCHEMA`.`COLUMNS`  WHERE `TABLE_SCHEMA`='prd_snf_predictionIO_db'  AND `TABLE_NAME`='pio_model_models';  --> to check the column name of table of DB
+
+delete from table-name where column-name < now() - interval 30 DAY;   --> to delete columns of a table older than x days (run after entering into database)
+
+SELECT table_schema "prd_snf_predictionIO_db", ROUND(SUM(data_length + index_length) / 1024 / 1024, 1) "DB Size in MB" FROM information_schema.tables GROUP BY table_schema; 
+
+DELETE FROM table WHERE date < '2011-09-21 08:21:22';
+
+ALTER TABLE vendors ADD COLUMN phone VARCHAR(15) AFTER name;  -->> to add column in mysql table
+
+INSERT INTO tblemployee (employee_first_name, ) values ('22','33')
+
+
+
+______________________________________________________________
+
+MONGODB
+
+mongo mongodb://mongoDbIPorDomain:port  --> For logging in  mongo with a port
+
+db.createUser({ user:"grlhsuser", pwd: "bl98$#hu^W2er", roles: [{role: "userAdminAnyDatabase", db: "admin"}] })  --> for grlhsuser in grillhouse for the applabs
+new passwd for grlhuser : nPkilejjgwp12ogtsXa
+
+mongo --host “hostname:port” -u user -p password --authenticationDatabase admin test
+
+
+db.createUser(
+... { user : "grhuser",                 							------------>>  for creating new user in mongo
+... pwd : "nPkilejjgwp12ogtsXa",
+... roles:[{role: "readWrite" , db:"grillhouse"}]})
+
+
+pm2 start "npm run start:prod" --name grillhouse  --> for running app
+
+pm2 start "npm run start:prod" --name grillhouse -i max  --> for cluster
+
+mongodb://grlsuser:nPkilejjgwp12ogtsXa@142.93.146.192:8090/grillhouse
+

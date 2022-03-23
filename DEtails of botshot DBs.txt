@@ -1,0 +1,94 @@
+
+user : postgres
+passwd : bigoh@@12345
+
+user : doadmin 
+passwd : bigoh@$12345
+
+
+mkdir /downloads/sonarqube -p
+cd /downloads/sonarqube
+wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.2.0.1873-linux.zip
+unzip sonar-scanner-cli-4.2.0.1873-linux.zip
+mv sonar-scanner-4.2.0.1873-linux /opt/sonar-scanner
+
+reboot
+source /etc/profile.d/sonar-scanner.sh
+
+-------------------------------------------------------------sshpass -p "Buj9#4!7*k" ssh -o StrictHostKeyChecking=no root@138.197.135.206
+
+stages:
+  - deploy
+
+deploy to development:
+  stage: deploy
+  environment:
+    name: development
+  when: manual
+  script: 
+    - ssh -o StrictHostKeyChecking=no -i $ssh_key $ssh_user@$ssh_serverip -p $ssh_port
+    - cd /app/grillhouse-shopify-node/ && rm -rf dist/
+    - npm run build
+    - pm2 restart all
+  only:
+    - deploy
+  after_script:
+    - ls
+	
+	
+----------------------------------------------------------------------------------------------------------------------------
+GRILLHOUSE-CI/CD-2
+-----------------------------------------------------------------------------------------------------------------------------
+
+
+stages:
+  - deploy
+
+deploy to development:
+  stage: deploy
+  environment:
+    name: development
+  when: manual
+  script: 
+    - ssh -T $ssh_user@$ssh_serverip -p $ssh_port
+    - cd /app/grillhouse-shopify-node/ && rm -rf dist/
+    - npm run build
+    - pm2 restart all
+  only:
+    refs:
+    - dev-deploy
+  after_script:
+    - ls
+-------------------------------------------------------------------------------------------------------------------------------
+[16/03 17:45] Nishant Soni
+Buj9#4!7*k
+
+[16/03 17:48] Nishant Soni
+pm2 start "npm run start:prod" --name grillhouse
+
+--------------------------------------------------------------------------------------
+
+stages:
+  - deploy
+
+
+deploy to development:
+  stage: deploy
+  environment:
+    name: development
+  when: manual
+  before_script:
+  - ls -l
+  - ls | wc -l
+  script:
+    - sshpass -p "$ssh_password" ssh -p "$ssh_port" "$ssh_user"@"$ssh_serverip" "cd $web_user_work_dir; pwd; ls;"
+    - sshpass -p "$ssh_password" scp -r -P$ssh_port * "$ssh_user"@"$ssh_serverip":"$web_user_work_dir"
+    - sshpass -p "$ssh_password" ssh -p "$ssh_port" "$ssh_user"@"$ssh_serverip" "cd $web_user_work_dir; free -h;"
+    - sshpass -p "$ssh_password" ssh -p "$ssh_port" "$ssh_user"@"$ssh_serverip" "sleep 40; npm run build ; pm2 restart all ; ls $web_user_work_dir && netstat -tnlp"
+  only:
+    - dev
+  only:
+    refs:
+    - dev-deploy
+
+
