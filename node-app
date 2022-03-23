@@ -1,0 +1,22 @@
+stages:
+  - deploy
+
+
+deploy to development:
+  stage: deploy
+  environment:
+    name: development
+  when: manual
+  before_script:
+  - ls -l
+  - ls | wc -l
+  script:
+    - sshpass -p "$ssh_password" ssh -p "$ssh_port" "$ssh_user"@"$ssh_serverip" "cd $web_user_work_dir; pwd; ls;"
+    - sshpass -p "$ssh_password" scp -r -P$ssh_port * "$ssh_user"@"$ssh_serverip":"$web_user_work_dir"
+    - sshpass -p "$ssh_password" ssh -p "$ssh_port" "$ssh_user"@"$ssh_serverip" "cd $web_user_work_dir; free -h;"
+    - sshpass -p "$ssh_password" ssh -p "$ssh_port" "$ssh_user"@"$ssh_serverip" "sleep 40; npm run build ; pm2 restart all ; ls $web_user_work_dir && netstat -tnlp"
+  only:
+    - dev
+  only:
+    refs:
+    - dev-deploy
