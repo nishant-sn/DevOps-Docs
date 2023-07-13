@@ -1,0 +1,20 @@
+version: 0.2
+phases:
+  install:
+    runtime-versions:
+      nodejs: 14
+  pre_build:    
+    commands:
+      - rm -rf package-lock.json node_modules
+      - npm cache clean --force
+      - npm i --unsafe-perm node-sass
+      - npm install node-sass --save-dev --unsafe-perm=true
+      - npm install
+  build:
+    commands:
+      - ls 
+      - cd build/
+      - pwd
+      - ls
+      - aws s3 sync ./ s3://${bucket_name}/ --cache-control 360000 --expires "2022-06-14T00:00:00Z" --delete
+      - aws configure set preview.cloudfront true && aws cloudfront create-invalidation --distribution-id ${cloudfront_distribution_id} --paths "/*"

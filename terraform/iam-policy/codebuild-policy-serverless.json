@@ -1,0 +1,27 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Action": [
+                "iam:*",
+                "sns:*",
+                "rds:*",
+                "ses:*",
+                "apigateway:*",
+                "cloudwatch:*",
+                "s3:*",
+                "lambda:*",
+                "cloudformation:*",
+                "events:*",
+                "mobiletargeting:*",
+                "ssm:*",
+                "codecommit:*",
+                "ssmmessages:*",
+                "codecommit:*",
+                "secretsmanager:*"
+            ],
+            "Effect": "Allow",
+            "Resource": "*"
+        }
+    ]
+}

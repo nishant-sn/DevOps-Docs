@@ -1,0 +1,35 @@
+version: 0.2
+env:
+  secret-manger:
+    
+phases:
+
+  install:
+    runtime-versions:
+      nodejs: 14
+    commands:
+      - export PYTHON_PATH="/usr/bin/python3.7"
+      - export ENV_FOLDER="venv"
+      - export NODE_OPTIONS="--max-old-space-size=8192"
+      - git config --global credential.helper '!aws codecommit credential-helper $@'
+      - git config --global credential.UseHttpPath true
+      - echo Installing
+      - npm install
+      - virtualenv -p ${PYTHON_PATH} ${ENV_FOLDER}
+      
+  pre_build:
+    commands:
+      - echo Installing source NPM dependencies.
+      - source venv/bin/activate
+      - npm install -g serverless
+  build:
+    commands:
+  
+      - echo deployment started `date`
+      - echo python requirement installing `date`
+      - pip install -r requirements.txt
+      - echo deploy serverless framework custom codebase
+      - serverless deploy --stage prod
+  post_build:
+    commands:
+      - echo post build completed on `date`

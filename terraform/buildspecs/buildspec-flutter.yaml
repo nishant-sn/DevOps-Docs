@@ -1,0 +1,29 @@
+version: 0.2
+phases:
+  install:
+    runtime-versions:
+      android: 29
+      java: corretto8
+    commands:
+      - pwd
+  pre_build:
+    commands:
+      - echo Pre Build started on `date`
+      - wget https://storage.googleapis.com/flutter_infra/releases/beta/linux/flutter_linux_1.25.0-8.1.pre-beta.tar.xz
+      - tar xf flutter_linux_1.25.0-8.1.pre-beta.tar.xz
+      - export PATH="$PATH:`pwd`/flutter/bin"
+      - flutter doctor
+      - flutter --version
+  build:
+    commands:
+      - echo Build started on `date`
+      - pwd
+      - ls -la
+      - flutter pub get
+      - flutter config --enable-web
+      - flutter build web
+      - ls -la 
+      - cd build
+      - pwd
+      - aws s3 sync ./ s3://${bucket_name}/ --cache-control 360000 --expires "2022-06-14T00:00:00Z" --delete
+      - aws configure set preview.cloudfront true && aws cloudfront create-invalidation --distribution-id ${cloudfront_distribution_id} --paths "/*"
